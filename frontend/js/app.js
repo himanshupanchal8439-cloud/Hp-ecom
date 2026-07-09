@@ -423,17 +423,20 @@ function refreshUserStatus() {
   const signOutBtn = document.getElementById('signOutBtn');
   const authForm = document.getElementById('authForm');
   const adminLink = document.getElementById('adminLink');
+  const myOrdersToggle = document.getElementById('myOrdersToggle');
   if (state.user) {
     status.textContent = state.user.name;
     signOutBtn.style.display = 'block';
     authForm.style.display = 'none';
     document.getElementById('authTitle').textContent = 'Account';
     adminLink.style.display = state.user.role === 'admin' ? 'inline' : 'none';
+    myOrdersToggle.style.display = 'inline';
   } else {
     status.textContent = 'Sign in';
     signOutBtn.style.display = 'none';
     authForm.style.display = 'block';
     adminLink.style.display = 'none';
+    myOrdersToggle.style.display = 'none';
   }
 }
 
@@ -443,6 +446,57 @@ document.getElementById('userStatus').addEventListener('click', () => {
     updateAuthUI();
   }
   openOverlay('authOverlay');
+});
+
+/* ---------- My Orders / tracking ---------- */
+const STATUS_STEPS = ['confirmed', 'shipped', 'delivered'];
+const STATUS_LABEL = { confirmed: 'Confirmed', shipped: 'Shipped', delivered: 'Delivered' };
+
+function renderOrderTracking(order) {
+  if (order.status === 'cancelled') {
+    return '<div class="order-cancelled">● Order cancelled</div>';
+  }
+  if (order.status === 'pending_payment') {
+    return '<div class="order-cancelled" style="color:inherit; opacity:.7;">Awaiting payment confirmation…</div>';
+  }
+  const currentIndex = STATUS_STEPS.indexOf(order.status);
+  return `
+    <div class="status-track">
+      ${STATUS_STEPS.map((step, i) => {
+        const cls = i < currentIndex ? 'done' : i === currentIndex ? 'current' : '';
+        return `<div class="status-step ${cls}"><span class="dot-node"></span><span class="step-label">${STATUS_LABEL[step]}</span></div>`;
+      }).join('')}
+    </div>`;
+}
+
+function orderCard(order) {
+  return `
+    <div class="order-card">
+      <div class="order-card-head">
+        <span class="oid">#${order.id.slice(0, 8)}</span>
+        <span class="odate">${new Date(order.createdAt).toLocaleString()}</span>
+      </div>
+      <div class="order-items">${order.items.map((i) => `${i.name} × ${i.quantity}`).join('<br/>')}</div>
+      <div class="order-total"><span>${order.paymentMethod === 'cod' ? 'Cash on Delivery' : 'Paid via Razorpay'}</span><span>₹${order.total}</span></div>
+      ${renderOrderTracking(order)}
+    </div>`;
+}
+
+async function loadMyOrders() {
+  const container = document.getElementById('ordersList');
+  try {
+    const orders = await api('/orders');
+    container.innerHTML = orders.length === 0
+      ? '<div class="empty-state">No orders yet.</div>'
+      : orders.map(orderCard).join('');
+  } catch (e) {
+    container.innerHTML = `<div class="empty-state">${e.message}</div>`;
+  }
+}
+
+document.getElementById('myOrdersToggle').addEventListener('click', () => {
+  openOverlay('ordersOverlay');
+  loadMyOrders();
 });
 
 document.getElementById('authForm').addEventListener('submit', async (e) => {

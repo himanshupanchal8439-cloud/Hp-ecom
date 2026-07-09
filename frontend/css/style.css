@@ -197,3 +197,25 @@ footer{ padding: 64px clamp(16px,3vw,48px) 48px; }
   opacity:0; transition: all .3s cubic-bezier(.16,1,.3,1); pointer-events:none; white-space:nowrap;
 }
 .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+#myOrdersToggle{ background:none; border:none; color:inherit; cursor:pointer; font-size:.95rem; opacity:.85; }
+#myOrdersToggle:hover{ opacity:1; }
+
+.order-card{ border:1px solid var(--line); padding:16px; margin-bottom:16px; }
+.order-card-head{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px; }
+.order-card-head .oid{ font-family:'Fraunces',serif; font-size:1.05rem; }
+.order-card-head .odate{ font-size:.72rem; opacity:.55; }
+.order-items{ font-size:.85rem; opacity:.85; margin-bottom:12px; line-height:1.6; }
+.order-total{ display:flex; justify-content:space-between; font-size:.9rem; margin-bottom:14px; opacity:.9; }
+
+.status-track{ display:flex; justify-content:space-between; position:relative; margin:18px 0 4px; }
+.status-track::before{
+  content:""; position:absolute; top:7px; left:6px; right:6px; height:1px; background:var(--line); z-index:0;
+}
+.status-step{ position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:6px; flex:1; }
+.status-step .dot-node{ width:14px; height:14px; border-radius:50%; background:var(--bg); border:1px solid var(--line); }
+.status-step.done .dot-node{ background:var(--fg); border-color:var(--fg); }
+.status-step.current .dot-node{ background:var(--signal); border-color:var(--signal); }
+.status-step span.step-label{ font-size:.62rem; text-transform:uppercase; letter-spacing:.06em; opacity:.6; text-align:center; }
+.status-step.done span.step-label, .status-step.current span.step-label{ opacity:1; }
+.order-cancelled{ color:var(--signal); font-size:.85rem; text-transform:uppercase; letter-spacing:.08em; margin-top:12px; }
