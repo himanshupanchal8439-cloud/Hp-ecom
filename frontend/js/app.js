@@ -43,12 +43,29 @@ const navBurger = document.getElementById('navBurger');
 const navRight = document.getElementById('navRight');
 const navBackdrop = document.getElementById('navBackdrop');
 
+// Plain `overflow:hidden` on <body> doesn't reliably block touch-scrolling
+// the page behind a fixed overlay on iOS Safari. Pinning body in place with
+// position:fixed (and restoring the scroll offset after) is the robust fix.
+let lockedScrollY = 0;
+
+function lockBodyScroll() {
+  lockedScrollY = window.scrollY;
+  document.body.classList.add('nav-open-lock');
+  document.body.style.top = `-${lockedScrollY}px`;
+}
+
+function unlockBodyScroll() {
+  document.body.classList.remove('nav-open-lock');
+  document.body.style.top = '';
+  window.scrollTo(0, lockedScrollY);
+}
+
 function closeMobileNav() {
   navBurger.classList.remove('open');
   navRight.classList.remove('open');
   navBackdrop.classList.remove('show');
   navEl.classList.remove('menu-open');
-  document.body.classList.remove('nav-open-lock');
+  unlockBodyScroll();
 }
 
 navBurger.addEventListener('click', () => {
@@ -60,7 +77,11 @@ navBurger.addEventListener('click', () => {
   // same blend group, making page content bleed through it. Suspend the
   // blend while the drawer is open so it renders as a solid opaque panel.
   navEl.classList.toggle('menu-open', isOpen);
-  document.body.classList.toggle('nav-open-lock', isOpen);
+  if (isOpen) {
+    lockBodyScroll();
+  } else {
+    unlockBodyScroll();
+  }
 });
 navBackdrop.addEventListener('click', closeMobileNav);
 navRight.querySelectorAll('button, a').forEach((el) => el.addEventListener('click', closeMobileNav));

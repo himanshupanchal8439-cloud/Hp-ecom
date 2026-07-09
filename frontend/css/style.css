@@ -21,7 +21,7 @@ body{
   transition: background .4s ease, color .4s ease;
 }
 ::selection{ background:var(--signal); color:var(--cream); }
-body.nav-open-lock{ overflow:hidden; }
+body.nav-open-lock{ position:fixed; left:0; right:0; overflow:hidden; }
 a{ color:inherit; text-decoration:none; }
 button{ font-family:inherit; }
 .serif{ font-family:'Fraunces', serif; font-weight:500; }
@@ -34,6 +34,13 @@ nav{
   display:flex; align-items:center; justify-content:space-between;
   padding:22px clamp(16px,3vw,48px);
   color:var(--fg);
+}
+/* The blur lives on a pseudo-element, not <nav> itself, because
+   backdrop-filter on an element creates a new containing block for any
+   position:fixed descendants (like the mobile drawer nested inside nav),
+   which breaks their viewport-relative positioning. */
+nav::before{
+  content:''; position:absolute; inset:0; z-index:-1;
   background: color-mix(in srgb, var(--bg) 55%, transparent);
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
@@ -52,12 +59,10 @@ nav{
 .nav-burger{
   display:none; flex-direction:column; justify-content:center; gap:4px;
   width:32px; height:32px; background:none; border:none; cursor:pointer; padding:0;
-  color:inherit;
+  color:inherit; transition: opacity .2s ease;
 }
-.nav-burger span{ width:100%; height:2px; background:currentColor; display:block; transition: transform .25s ease, opacity .25s ease; }
-.nav-burger.open span:nth-child(1){ transform: translateY(6px) rotate(45deg); }
-.nav-burger.open span:nth-child(2){ opacity:0; }
-.nav-burger.open span:nth-child(3){ transform: translateY(-6px) rotate(-45deg); }
+.nav-burger span{ width:100%; height:2px; background:currentColor; display:block; transition: opacity .2s ease; }
+.nav-burger.open{ opacity:0; pointer-events:none; }
 
 .nav-backdrop{
   display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:45;
@@ -82,6 +87,7 @@ nav{
     backdrop-filter: blur(18px);
     transform:translateX(100%);
     transition: transform .3s cubic-bezier(.16,1,.3,1);
+    overflow-y:auto; -webkit-overflow-scrolling:touch;
   }
   .nav-right.open{ transform:translateX(0); }
   nav.menu-open{ mix-blend-mode:normal; }
