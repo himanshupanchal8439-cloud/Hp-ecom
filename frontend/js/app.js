@@ -15,12 +15,24 @@ function authHeaders() {
   return state.token ? { Authorization: `Bearer ${state.token}` } : {};
 }
 
+function forceSignOut(message) {
+  state.token = null;
+  state.user = null;
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  refreshUserStatus();
+  if (message) showToast(message);
+}
+
 async function api(path, options = {}) {
   const res = await fetch(`${API}${path}`, {
     ...options,
     headers: { 'Content-Type': 'application/json', ...authHeaders(), ...(options.headers || {}) },
   });
   const data = await res.json().catch(() => ({}));
+  if (res.status === 401 && state.token) {
+    forceSignOut('Your session expired — please sign in again.');
+  }
   if (!res.ok) throw new Error(data.error || 'Something went wrong');
   return data;
 }
