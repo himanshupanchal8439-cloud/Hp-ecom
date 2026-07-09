@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>FORME — Structural Basics</title>
+<title>HIM-STORE — Structural Basics</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
@@ -57,14 +57,25 @@
   .hero{ padding-top:64px; }
   .hero-mark{ width:100%; overflow:hidden; }
   .hero-mark svg{ width:100%; height:auto; display:block; }
+  .hero-highlight{
+    margin: 28px 0 24px; padding: 18px 20px; border: 1px solid var(--line);
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    font-size:.82rem; text-transform:uppercase; letter-spacing:.12em;
+    opacity:.9;
+  }
   .hero-grid{
     display:grid; grid-template-columns: repeat(8,1fr); gap:24px;
-    margin: 28px 0 56px; font-size:.85rem; text-transform:uppercase; letter-spacing:.06em;
+    margin: 0 0 56px; font-size:.85rem; text-transform:uppercase; letter-spacing:.06em;
   }
   .hero-grid .col-title{ grid-column: span 2; font-size:2.4rem; text-transform:none; letter-spacing:-0.02em; line-height:.9; font-family:'Fraunces',serif; }
   .hero-grid .col-copy{ grid-column: span 4; font-size:1rem; text-transform:none; letter-spacing:0; max-width:46ch; line-height:1.5; opacity:.85; }
   .hero-grid .col-meta{ grid-column: span 2; display:flex; flex-direction:column; justify-content:space-between; }
-  .hero-grid .col-meta a{ width:fit-content; border-bottom:1px solid currentColor; padding-bottom:2px; }
+  .hero-grid .col-meta a, .hero-grid .col-meta .btn{
+    width:fit-content; border-bottom:1px solid currentColor; padding-bottom:2px;
+  }
+  .hero-grid .col-meta .btn{
+    display:inline-flex; align-items:center; gap:8px; margin-bottom:8px; padding:10px 14px; border:1px solid currentColor; border-bottom:1px solid currentColor; border-radius:999px; text-transform:uppercase; letter-spacing:.12em; font-size:.72rem;
+  }
   @media (max-width:900px){
     .hero-grid{ grid-template-columns: repeat(2,1fr); }
     .hero-grid .col-title, .hero-grid .col-copy, .hero-grid .col-meta{ grid-column: span 2; }
@@ -120,6 +131,11 @@
   footer{ padding: 64px clamp(16px,3vw,48px) 48px; }
   .foot-big{ font-family:'Fraunces',serif; font-size: clamp(2.2rem, 8vw, 5rem); line-height:.95; letter-spacing:-0.02em; margin: 24px 0 64px; }
   .foot-big .accent{ color:var(--signal); }
+  .foot-cta{
+    margin: 24px 0 40px; padding: 20px 22px; border: 1px solid var(--line);
+    display:flex; justify-content:space-between; align-items:center; gap:16px;
+    font-size:.9rem; text-transform:uppercase; letter-spacing:.12em;
+  }
   .foot-cols{ display:grid; grid-template-columns: repeat(4,1fr); gap:24px; font-size:.9rem; }
   .foot-cols div{ display:flex; flex-direction:column; gap:10px; }
   .foot-cols a{ opacity:.75; }
@@ -133,7 +149,7 @@
 <div class="cursor-label" id="cursorLabel">View</div>
 
 <nav>
-  <div class="wordmark">FORME°</div>
+  <div class="wordmark">HIM-STORE</div>
   <div class="nav-right">
     <span style="opacity:.85">Shop</span>
     <span style="opacity:.6">Bag (0)</span>
@@ -150,15 +166,19 @@
   <section class="hero">
     <div class="hero-mark">
       <svg viewBox="0 0 1200 220" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
-        <text x="0" y="180" font-family="Fraunces, serif" font-size="200" font-weight="500" letter-spacing="-6">FORME</text>
+        <text x="0" y="180" font-family="Fraunces, serif" font-size="200" font-weight="500" letter-spacing="-6">HIM-STORE</text>
       </svg>
     </div>
     <div class="rule"></div>
+    <div class="hero-highlight">
+      <span>Limited autumn release • 6 sculptural essentials</span>
+      <span>Free express shipping over $150</span>
+    </div>
     <div class="hero-grid">
       <div class="col-title">Built like<br/>a joint,<br/>not a seam.</div>
       <div class="col-copy">A small run of structural basics — patterns drawn from load-bearing shapes rather than trend boards. Six pieces, cut once a season, made to outlast the drop that made them.</div>
       <div class="col-meta">
-        <a href="#shop">Enter the shop</a>
+        <a class="btn" href="#shop">Enter the shop</a>
         <span>© 2026 — Object no. 01–06</span>
       </div>
     </div>
@@ -256,15 +276,30 @@
     </div>
   </section>
 
+  <section class="section" id="contact">
+    <div class="section-head">
+      <h2>Visit & Contact</h2>
+      <span class="idx">03 / 03</span>
+    </div>
+    <div class="hero-highlight" style="margin:0; justify-content:space-between; flex-wrap:wrap;">
+      <span>Studio open by appointment • Leeds, UK</span>
+      <a class="btn" href="mailto:hello@him-style.com" style="border-bottom:1px solid currentColor;">hello@him-style.com</a>
+    </div>
+  </section>
+
 </main>
 
 <footer>
   <div class="rule"></div>
   <div class="foot-big">Made to bear weight.<br/><span class="accent">Not just to be worn.</span></div>
+  <div class="foot-cta">
+    <span>New season preview opens Friday</span>
+    <a href="#shop">Browse essentials</a>
+  </div>
   <div class="rule"></div>
   <div class="foot-cols" style="margin-top:40px;">
     <div>
-      <span class="wordmark">FORME°</span>
+      <span class="wordmark">HIM-STORE</span>
       <span style="opacity:.6">All rights reserved © 2026</span>
     </div>
     <div>
