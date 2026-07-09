@@ -33,19 +33,19 @@ nav{
   position:sticky; top:0; z-index:50;
   display:flex; align-items:center; justify-content:space-between;
   padding:22px clamp(16px,3vw,48px);
-  mix-blend-mode:difference;
-  color:#fff;
+  background:var(--bg); color:var(--fg);
+  border-bottom:1px solid var(--line);
 }
 .wordmark{ font-family:'Fraunces', serif; font-size:1.3rem; letter-spacing:-0.02em; cursor:pointer; background:none; border:none; color:inherit; padding:0; }
 .nav-right{ display:flex; align-items:center; gap:28px; font-size:.95rem; }
 .nav-right button{ background:none; border:none; color:inherit; cursor:pointer; font-size:.95rem; opacity:.85; }
 .nav-right button:hover{ opacity:1; }
 .dots{ display:flex; gap:6px; }
-.dot{ width:16px; height:16px; border-radius:50%; border:1px solid rgba(255,255,255,.6); cursor:pointer; }
+.dot{ width:16px; height:16px; border-radius:50%; border:1px solid var(--line); cursor:pointer; }
 .dot[data-t="cream"]{ background:#ede4dd; }
 .dot[data-t="dark"]{ background:#141210; }
 .dot[data-t="red"]{ background:#ff3b1f; }
-.dot.active{ box-shadow: 0 0 0 2px #fff; }
+.dot.active{ box-shadow: 0 0 0 2px var(--fg); }
 
 .nav-burger{
   display:none; flex-direction:column; justify-content:center; gap:4px;
