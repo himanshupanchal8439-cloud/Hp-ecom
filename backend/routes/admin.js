@@ -12,7 +12,7 @@ router.get('/products', (req, res) => {
 });
 
 router.post('/products', (req, res) => {
-  const { name, price, category, stockQty, front, back, description } = req.body;
+  const { name, price, category, stockQty, front, back, description, mrp, discountPercent } = req.body;
   if (!name || price == null || !category || stockQty == null || !front || !back) {
     return res.status(400).json({ error: 'name, price, category, stockQty, front and back are required' });
   }
@@ -26,6 +26,8 @@ router.post('/products', (req, res) => {
     front,
     back,
     description: description || '',
+    mrp: mrp != null && mrp !== '' ? Number(mrp) : undefined,
+    discountPercent: discountPercent != null && discountPercent !== '' ? Number(discountPercent) : undefined,
   };
   products.push(product);
   write('products', products);
@@ -36,7 +38,7 @@ router.put('/products/:id', (req, res) => {
   const products = read('products');
   const product = products.find((p) => p.id === req.params.id);
   if (!product) return res.status(404).json({ error: 'Product not found' });
-  const { name, price, category, stockQty, front, back, description } = req.body;
+  const { name, price, category, stockQty, front, back, description, mrp, discountPercent } = req.body;
   if (name !== undefined) product.name = name;
   if (price !== undefined) product.price = Number(price);
   if (category !== undefined) product.category = category;
@@ -44,6 +46,8 @@ router.put('/products/:id', (req, res) => {
   if (front !== undefined) product.front = front;
   if (back !== undefined) product.back = back;
   if (description !== undefined) product.description = description;
+  if (mrp !== undefined) product.mrp = mrp === '' ? undefined : Number(mrp);
+  if (discountPercent !== undefined) product.discountPercent = discountPercent === '' ? undefined : Number(discountPercent);
   write('products', products);
   res.json(withStockStatus(product));
 });

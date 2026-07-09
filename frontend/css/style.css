@@ -158,9 +158,15 @@ nav::before{
   content:""; position:absolute; inset:0; pointer-events:none;
   background: color-mix(in srgb, var(--bg) 12%, transparent);
 }
+.discount-badge, .pd-media .discount-badge{
+  position:absolute; top:12px; left:12px; z-index:2;
+  background:var(--signal); color:#fff; font-size:.68rem; font-weight:700;
+  text-transform:uppercase; letter-spacing:.06em; padding:5px 9px; border-radius:999px;
+}
 
 .card-info{ display:flex; justify-content:space-between; margin-top:12px; font-size:1.05rem; }
-.card-info span.price{ opacity:.6; }
+.card-info span.price{ opacity:.85; }
+.card-info .price .mrp{ opacity:.55; font-size:.82em; margin-left:5px; }
 .card-tag{ display:flex; align-items:center; gap:6px; margin-top:6px; font-size:.68rem; text-transform:uppercase; letter-spacing:.08em; opacity:.55; }
 .card-tag i{ width:6px; height:6px; border-radius:50%; background:currentColor; display:inline-block; }
 .card-tag.low, .card-tag.restocking{ color:var(--signal); opacity:.9; }
@@ -237,10 +243,11 @@ footer{ padding: 64px clamp(16px,3vw,48px) 48px; }
 .auth-switch button{ background:none; border:none; color:var(--signal); cursor:pointer; text-decoration:underline; }
 
 .product-detail{ display:grid; gap:24px; }
-.product-detail .pd-media{ display:flex; gap:10px; }
+.product-detail .pd-media{ position:relative; display:flex; gap:10px; }
 .product-detail .pd-media img{ width:50%; aspect-ratio:3/4; object-fit:cover; }
 .pd-name{ font-family:'Fraunces',serif; font-size:1.6rem; margin:0 0 6px; }
-.pd-price{ opacity:.7; margin-bottom:14px; }
+.pd-price{ opacity:.85; margin-bottom:14px; }
+.pd-price .mrp{ opacity:.55; font-size:.9em; margin-left:6px; }
 .pd-desc{ opacity:.85; line-height:1.5; margin-bottom:20px; }
 
 .empty-state{ opacity:.6; padding:40px 0; text-align:center; }

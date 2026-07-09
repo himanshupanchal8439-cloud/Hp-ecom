@@ -115,7 +115,8 @@ async function loadProducts() {
         <td><img src="${p.front}" alt="${p.name}" /></td>
         <td>${p.name}</td>
         <td>${p.category}</td>
-        <td>₹${p.price}</td>
+        <td>₹${p.price}${p.mrp ? ` <s style="opacity:.5;">₹${p.mrp}</s>` : ''}</td>
+        <td>${p.discountPercent ? `${p.discountPercent}%` : '—'}</td>
         <td>${p.stockQty} (${p.stock})</td>
         <td class="row-actions">
           <button data-action="edit">Edit</button>
@@ -142,6 +143,8 @@ function editProduct(p) {
   document.getElementById('pFront').value = p.front;
   document.getElementById('pBack').value = p.back;
   document.getElementById('pDesc').value = p.description || '';
+  document.getElementById('pMrp').value = p.mrp || '';
+  document.getElementById('pDiscount').value = p.discountPercent || '';
   document.getElementById('productSubmit').textContent = 'Save changes';
   document.getElementById('productCancel').style.display = 'block';
   window.scrollTo({ top: document.getElementById('productForm').offsetTop - 20, behavior: 'smooth' });
@@ -166,6 +169,8 @@ async function submitProduct(e) {
     front: document.getElementById('pFront').value.trim(),
     back: document.getElementById('pBack').value.trim(),
     description: document.getElementById('pDesc').value.trim(),
+    mrp: document.getElementById('pMrp').value.trim(),
+    discountPercent: document.getElementById('pDiscount').value.trim(),
   };
   try {
     if (editingId) {

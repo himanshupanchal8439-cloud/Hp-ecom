@@ -122,13 +122,18 @@ const stockLabel = { 'in-stock': 'In stock', 'low-stock': 'Low stock', 'out-of-s
 const stockClass = { 'in-stock': '', 'low-stock': 'low', 'out-of-stock': 'restocking' };
 
 function productCard(p) {
+  const hasDiscount = p.discountPercent > 0 && p.mrp > p.price;
   return `
     <button class="card" data-id="${p.id}">
       <div class="card-media">
+        ${hasDiscount ? `<span class="discount-badge">${p.discountPercent}% OFF</span>` : ''}
         <div class="swatch front"><img src="${p.front}" alt="${p.name}, front"></div>
         <div class="swatch back"><img src="${p.back}" alt="${p.name}, back"></div>
       </div>
-      <div class="card-info"><span>${p.name}</span><span class="price">₹${p.price}</span></div>
+      <div class="card-info">
+        <span>${p.name}</span>
+        <span class="price">₹${p.price}${hasDiscount ? ` <s class="mrp">₹${p.mrp}</s>` : ''}</span>
+      </div>
       <div class="card-tag ${stockClass[p.stock] || ''}"><i></i>${stockLabel[p.stock] || 'In stock'}</div>
     </button>`;
 }
@@ -168,15 +173,17 @@ function openProductDetail(id) {
   const p = state.products.find((x) => x.id === id);
   if (!p) return;
   const outOfStock = p.stock === 'out-of-stock';
+  const hasDiscount = p.discountPercent > 0 && p.mrp > p.price;
   document.getElementById('productDetailBody').innerHTML = `
     <div class="product-detail">
       <div class="pd-media">
+        ${hasDiscount ? `<span class="discount-badge">${p.discountPercent}% OFF</span>` : ''}
         <img src="${p.front}" alt="${p.name} front" />
         <img src="${p.back}" alt="${p.name} back" />
       </div>
       <div>
         <h3 class="pd-name">${p.name}</h3>
-        <div class="pd-price">₹${p.price}</div>
+        <div class="pd-price">₹${p.price}${hasDiscount ? ` <s class="mrp">₹${p.mrp}</s>` : ''}</div>
         <p class="pd-desc">${p.description || ''}</p>
         <button class="full-btn" id="buyNowBtn" ${outOfStock ? 'disabled' : ''}>${outOfStock ? 'Out of stock' : 'Buy now'}</button>
         <button class="ghost-btn" id="addToCartBtn" ${outOfStock ? 'disabled' : ''}>${outOfStock ? '' : 'Add to bag'}</button>

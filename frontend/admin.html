@@ -70,7 +70,7 @@
 
     <div class="tabpane active" id="tab-products">
       <table>
-        <thead><tr><th></th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th></th></tr></thead>
+        <thead><tr><th></th><th>Name</th><th>Category</th><th>Price</th><th>Discount</th><th>Stock</th><th></th></tr></thead>
         <tbody id="productsTable"></tbody>
       </table>
 
@@ -80,6 +80,8 @@
         <div class="field"><label>Category</label><input id="pCategory" required /></div>
         <div class="field"><label>Price (₹)</label><input id="pPrice" type="number" min="0" step="1" required /></div>
         <div class="field"><label>Stock qty</label><input id="pStock" type="number" min="0" step="1" required /></div>
+        <div class="field"><label>MRP / original price (₹, optional)</label><input id="pMrp" type="number" min="0" step="1" /></div>
+        <div class="field"><label>Discount % (optional)</label><input id="pDiscount" type="number" min="0" max="90" step="1" /></div>
         <div class="field"><label>Front image URL</label><input id="pFront" required /></div>
         <div class="field"><label>Back image URL</label><input id="pBack" required /></div>
         <div class="field" style="grid-column:span 2;"><label>Description</label><input id="pDesc" /></div>
