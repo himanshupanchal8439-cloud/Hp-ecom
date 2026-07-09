@@ -450,19 +450,26 @@ function refreshUserStatus() {
   const status = document.getElementById('userStatus');
   const signOutBtn = document.getElementById('signOutBtn');
   const authForm = document.getElementById('authForm');
+  const authSwitchWrap = document.getElementById('authSwitchWrap');
+  const acctInfo = document.getElementById('acctInfo');
   const adminLink = document.getElementById('adminLink');
   const myOrdersToggle = document.getElementById('myOrdersToggle');
   if (state.user) {
     status.textContent = state.user.name;
     signOutBtn.style.display = 'block';
     authForm.style.display = 'none';
+    authSwitchWrap.style.display = 'none';
+    acctInfo.style.display = 'block';
     document.getElementById('authTitle').textContent = 'Account';
+    document.getElementById('acctEmail').textContent = state.user.email;
     adminLink.style.display = state.user.role === 'admin' ? 'inline' : 'none';
     myOrdersToggle.style.display = 'inline';
   } else {
     status.textContent = 'Sign in';
     signOutBtn.style.display = 'none';
     authForm.style.display = 'block';
+    authSwitchWrap.style.display = 'block';
+    acctInfo.style.display = 'none';
     adminLink.style.display = 'none';
     myOrdersToggle.style.display = 'none';
   }
@@ -472,8 +479,89 @@ document.getElementById('userStatus').addEventListener('click', () => {
   if (!state.user) {
     state.authMode = 'login';
     updateAuthUI();
+  } else {
+    loadAccountAddresses();
   }
   openOverlay('authOverlay');
+});
+
+/* ---------- Account panel ---------- */
+function renderAcctAddresses() {
+  const container = document.getElementById('acctAddressList');
+  if (state.addresses.length === 0) {
+    container.innerHTML = '<div class="empty-state" style="padding:16px 0;">No saved addresses yet.</div>';
+    return;
+  }
+  container.innerHTML = state.addresses
+    .map(
+      (a) => `
+      <div class="field" style="flex-direction:row; align-items:flex-start; justify-content:space-between; gap:10px; text-transform:none; letter-spacing:0; border:1px solid var(--line); padding:12px; border-radius:2px; margin-bottom:8px;">
+        <span>
+          <strong>${a.fullName}</strong> — ${a.phone}<br/>
+          ${a.line1}${a.line2 ? ', ' + a.line2 : ''}, ${a.city}, ${a.state} ${a.postalCode}
+        </span>
+        <button data-id="${a.id}" style="background:none; border:none; color:var(--signal); cursor:pointer; font-size:.75rem; text-transform:uppercase; letter-spacing:.06em; white-space:nowrap;">Remove</button>
+      </div>`
+    )
+    .join('');
+  container.querySelectorAll('button[data-id]').forEach((btn) =>
+    btn.addEventListener('click', () => deleteAcctAddress(btn.dataset.id))
+  );
+}
+
+async function loadAccountAddresses() {
+  try {
+    const me = await api('/auth/me');
+    state.addresses = me.addresses || [];
+    renderAcctAddresses();
+  } catch (e) {
+    showToast(e.message);
+  }
+}
+
+async function deleteAcctAddress(id) {
+  try {
+    state.addresses = await api(`/auth/addresses/${id}`, { method: 'DELETE' });
+    if (state.selectedAddressId === id) state.selectedAddressId = null;
+    renderAcctAddresses();
+    showToast('Address removed');
+  } catch (e) {
+    showToast(e.message);
+  }
+}
+
+document.getElementById('acctShowAddAddress').addEventListener('click', () => {
+  const form = document.getElementById('acctAddAddressForm');
+  form.style.display = form.style.display === 'none' ? 'block' : 'none';
+});
+
+document.getElementById('acctAddAddressForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const msg = document.getElementById('acctAddrMsg');
+  msg.textContent = '';
+  const body = {
+    fullName: document.getElementById('acctAddrName').value.trim(),
+    phone: document.getElementById('acctAddrPhone').value.trim(),
+    line1: document.getElementById('acctAddrLine1').value.trim(),
+    line2: document.getElementById('acctAddrLine2').value.trim(),
+    city: document.getElementById('acctAddrCity').value.trim(),
+    state: document.getElementById('acctAddrState').value.trim(),
+    postalCode: document.getElementById('acctAddrPostal').value.trim(),
+  };
+  try {
+    state.addresses = await api('/auth/addresses', { method: 'POST', body: JSON.stringify(body) });
+    renderAcctAddresses();
+    document.getElementById('acctAddAddressForm').reset();
+    document.getElementById('acctAddAddressForm').style.display = 'none';
+  } catch (err) {
+    msg.textContent = err.message;
+  }
+});
+
+document.getElementById('viewMyOrdersBtn').addEventListener('click', () => {
+  closeOverlay('authOverlay');
+  openOverlay('ordersOverlay');
+  loadMyOrders();
 });
 
 /* ---------- My Orders / tracking ---------- */

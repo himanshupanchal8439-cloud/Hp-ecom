@@ -224,10 +224,35 @@
       <div class="form-msg" id="authMsg"></div>
       <button class="full-btn" type="submit" id="authSubmit">Sign In</button>
     </form>
-    <div class="auth-switch">
+    <div class="auth-switch" id="authSwitchWrap">
       <span id="authSwitchText">Don't have an account?</span>
       <button id="authSwitchBtn">Create one</button>
     </div>
+
+    <div id="acctInfo" style="display:none;">
+      <p id="acctEmail" style="opacity:.7; margin:-8px 0 20px;"></p>
+
+      <div class="section-head" style="margin-bottom:12px;">
+        <h2 style="font-size:1rem;">Your Addresses</h2>
+      </div>
+      <div id="acctAddressList"></div>
+
+      <form id="acctAddAddressForm" style="margin-top:14px; display:none;">
+        <div class="field"><label>Full name</label><input id="acctAddrName" required /></div>
+        <div class="field"><label>Phone</label><input id="acctAddrPhone" required /></div>
+        <div class="field"><label>Address line 1</label><input id="acctAddrLine1" required /></div>
+        <div class="field"><label>Address line 2 (optional)</label><input id="acctAddrLine2" /></div>
+        <div class="field"><label>City</label><input id="acctAddrCity" required /></div>
+        <div class="field"><label>State</label><input id="acctAddrState" required /></div>
+        <div class="field"><label>Postal code</label><input id="acctAddrPostal" required /></div>
+        <div class="form-msg" id="acctAddrMsg"></div>
+        <button class="ghost-btn" type="submit">Save address</button>
+      </form>
+      <button class="ghost-btn" id="acctShowAddAddress">+ Add new address</button>
+
+      <button class="full-btn" id="viewMyOrdersBtn" style="margin-top:24px;">View My Orders</button>
+    </div>
+
     <button class="ghost-btn" id="signOutBtn" style="display:none">Sign Out</button>
   </div>
 </div>
