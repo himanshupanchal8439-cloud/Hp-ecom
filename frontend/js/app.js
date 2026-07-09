@@ -37,6 +37,25 @@ async function api(path, options = {}) {
   return data;
 }
 
+/* ---------- Mobile nav ---------- */
+const navBurger = document.getElementById('navBurger');
+const navRight = document.getElementById('navRight');
+const navBackdrop = document.getElementById('navBackdrop');
+
+function closeMobileNav() {
+  navBurger.classList.remove('open');
+  navRight.classList.remove('open');
+  navBackdrop.classList.remove('show');
+}
+
+navBurger.addEventListener('click', () => {
+  const isOpen = navRight.classList.toggle('open');
+  navBurger.classList.toggle('open', isOpen);
+  navBackdrop.classList.toggle('show', isOpen);
+});
+navBackdrop.addEventListener('click', closeMobileNav);
+navRight.querySelectorAll('button, a').forEach((el) => el.addEventListener('click', closeMobileNav));
+
 /* ---------- Theme ---------- */
 const dots = document.querySelectorAll('.dot');
 const html = document.documentElement;

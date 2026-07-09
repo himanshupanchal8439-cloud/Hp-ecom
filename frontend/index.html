@@ -13,7 +13,10 @@
 
 <nav>
   <button class="wordmark" id="homeLink">HIM-STORE</button>
-  <div class="nav-right">
+  <button class="nav-burger" id="navBurger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-right" id="navRight">
     <a href="admin.html" id="adminLink" style="display:none; opacity:.85">Admin</a>
     <button id="myOrdersToggle" style="display:none;">My Orders</button>
     <span id="userStatus" style="opacity:.85">Sign in</span>
@@ -25,6 +28,7 @@
     </div>
   </div>
 </nav>
+<div class="nav-backdrop" id="navBackdrop"></div>
 
 <main class="wrap">
 
