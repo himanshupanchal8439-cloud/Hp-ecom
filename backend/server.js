@@ -6,6 +6,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 
+const { ensureSchema, usePg } = require('./db');
 const productsRouter = require('./routes/products');
 const authRouter = require('./routes/auth');
 const cartRouter = require('./routes/cart');
@@ -51,9 +52,17 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Internal server error' });
 });
 
-app.listen(PORT, () => {
-  console.log(`HIM-STORE server running at http://localhost:${PORT}`);
-  if (!process.env.RAZORPAY_KEY_ID) {
-    console.log('Razorpay keys not set — online payments disabled, Cash on Delivery still works. See backend/.env.example');
-  }
-});
+ensureSchema()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`HIM-STORE server running at http://localhost:${PORT}`);
+      console.log(usePg ? 'Using Postgres for persistent storage.' : 'Using local JSON files for storage (set DATABASE_URL for persistent Postgres).');
+      if (!process.env.RAZORPAY_KEY_ID) {
+        console.log('Razorpay keys not set — online payments disabled, Cash on Delivery still works. See backend/.env.example');
+      }
+    });
+  })
+  .catch((err) => {
+    console.error('Failed to initialize database:', err);
+    process.exit(1);
+  });
