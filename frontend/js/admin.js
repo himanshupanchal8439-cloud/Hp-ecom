@@ -1,4 +1,4 @@
-const API = '/api';
+const API = window.HIMSTORE_API_BASE || '/api';
 let token = localStorage.getItem('token');
 
 const dots = document.querySelectorAll('.dot');
