@@ -125,8 +125,8 @@ function productCard(p) {
   return `
     <button class="card" data-id="${p.id}">
       <div class="card-media">
-        <div class="swatch front"><img src="${p.front}" alt="${p.name}, front"><span class="swatch-label">Front</span></div>
-        <div class="swatch back"><img src="${p.back}" alt="${p.name}, back"><span class="swatch-label">Back</span></div>
+        <div class="swatch front"><img src="${p.front}" alt="${p.name}, front"></div>
+        <div class="swatch back"><img src="${p.back}" alt="${p.name}, back"></div>
       </div>
       <div class="card-info"><span>${p.name}</span><span class="price">₹${p.price}</span></div>
       <div class="card-tag ${stockClass[p.stock] || ''}"><i></i>${stockLabel[p.stock] || 'In stock'}</div>
