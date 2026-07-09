@@ -13,12 +13,12 @@ html[data-theme="red"]{ --bg:#ff3b1f; --fg:#141210; --card:#ff5a42; }
 
 *,*::before,*::after{ box-sizing:border-box; }
 html,body{ margin:0; padding:0; }
+html{ overflow-x:hidden; }
 body{
   background:var(--bg); color:var(--fg);
   font-family:'Space Grotesk', sans-serif;
   font-weight:500;
   transition: background .4s ease, color .4s ease;
-  overflow-x:hidden;
 }
 ::selection{ background:var(--signal); color:var(--cream); }
 body.nav-open-lock{ overflow:hidden; }
