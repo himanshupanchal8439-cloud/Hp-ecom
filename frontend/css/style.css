@@ -142,10 +142,7 @@ nav::before{
 .swatch{ position:absolute; inset:0; }
 .swatch img{
   width:100%; height:100%; object-fit:cover; display:block;
-  filter: grayscale(1) contrast(1.05) brightness(.95) sepia(.15);
-  mix-blend-mode: multiply;
 }
-html[data-theme="dark"] .swatch img{ mix-blend-mode: screen; filter: grayscale(1) contrast(1.1) brightness(.9); }
 .swatch-label{
   position:absolute; left:14px; bottom:14px; font-size:.72rem; text-transform:uppercase;
   letter-spacing:.08em; padding:4px 8px; background:var(--bg); color:var(--fg); opacity:.85;
@@ -209,7 +206,7 @@ footer{ padding: 64px clamp(16px,3vw,48px) 48px; }
 .close-btn{ background:none; border:1px solid var(--line); border-radius:50%; width:32px; height:32px; cursor:pointer; color:inherit; font-size:1rem; }
 
 .cart-item{ display:flex; gap:12px; padding:14px 0; border-bottom:1px solid var(--line); align-items:center; }
-.cart-item img{ width:64px; height:80px; object-fit:cover; filter:grayscale(1) sepia(.15); }
+.cart-item img{ width:64px; height:80px; object-fit:cover; }
 .cart-item .ci-info{ flex:1; }
 .cart-item .ci-name{ font-family:'Fraunces',serif; }
 .cart-item .ci-controls{ display:flex; align-items:center; gap:8px; margin-top:6px; font-size:.85rem; }
@@ -238,7 +235,7 @@ footer{ padding: 64px clamp(16px,3vw,48px) 48px; }
 
 .product-detail{ display:grid; gap:24px; }
 .product-detail .pd-media{ display:flex; gap:10px; }
-.product-detail .pd-media img{ width:50%; aspect-ratio:3/4; object-fit:cover; filter:grayscale(1) sepia(.15); }
+.product-detail .pd-media img{ width:50%; aspect-ratio:3/4; object-fit:cover; }
 .pd-name{ font-family:'Fraunces',serif; font-size:1.6rem; margin:0 0 6px; }
 .pd-price{ opacity:.7; margin-bottom:14px; }
 .pd-desc{ opacity:.85; line-height:1.5; margin-bottom:20px; }
