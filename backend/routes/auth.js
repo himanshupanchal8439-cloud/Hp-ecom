@@ -15,6 +15,16 @@ function signToken(user) {
   return jwt.sign({ id: user.id, name: user.name, email: user.email, role: user.role }, JWT_SECRET, { expiresIn: '7d' });
 }
 
+// Keeps the designated admin account correct even if ADMIN_EMAIL was set
+// (or changed) after the account already existed.
+function syncAdminRole(user, users) {
+  const isDesignatedAdmin = process.env.ADMIN_EMAIL && user.email.toLowerCase() === process.env.ADMIN_EMAIL.toLowerCase();
+  if (isDesignatedAdmin && user.role !== 'admin') {
+    user.role = 'admin';
+    write('users', users);
+  }
+}
+
 router.post('/register', async (req, res) => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
@@ -43,6 +53,7 @@ router.post('/login', async (req, res) => {
   if (!user || !(await bcrypt.compare(password || '', user.passwordHash))) {
     return res.status(401).json({ error: 'Invalid email or password' });
   }
+  syncAdminRole(user, users);
   res.json({ token: signToken(user), user: publicUser(user) });
 });
 
