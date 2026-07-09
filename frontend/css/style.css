@@ -21,6 +21,7 @@ body{
   overflow-x:hidden;
 }
 ::selection{ background:var(--signal); color:var(--cream); }
+body.nav-open-lock{ overflow:hidden; }
 a{ color:inherit; text-decoration:none; }
 button{ font-family:inherit; }
 .serif{ font-family:'Fraunces', serif; font-weight:500; }
@@ -66,13 +67,13 @@ nav{
 @media (max-width:900px){
   .nav-burger{ display:flex; }
   .nav-right{
-    position:fixed; top:0; right:0; height:100vh; width:min(280px,80vw);
+    position:fixed; inset:0; height:100vh; width:100vw;
     background:var(--bg); color:var(--fg); flex-direction:column; align-items:flex-start;
     gap:22px; padding:88px 24px 24px; z-index:46; mix-blend-mode:normal;
     transform:translateX(100%); transition: transform .3s cubic-bezier(.16,1,.3,1);
-    box-shadow: -8px 0 24px rgba(0,0,0,.15);
   }
   .nav-right.open{ transform:translateX(0); }
+  nav.menu-open{ mix-blend-mode:normal; }
   .nav-right .dots{ margin-top:8px; }
   .nav-close{
     display:flex; align-items:center; justify-content:center;

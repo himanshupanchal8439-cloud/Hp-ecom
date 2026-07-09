@@ -38,6 +38,7 @@ async function api(path, options = {}) {
 }
 
 /* ---------- Mobile nav ---------- */
+const navEl = document.querySelector('nav');
 const navBurger = document.getElementById('navBurger');
 const navRight = document.getElementById('navRight');
 const navBackdrop = document.getElementById('navBackdrop');
@@ -46,12 +47,20 @@ function closeMobileNav() {
   navBurger.classList.remove('open');
   navRight.classList.remove('open');
   navBackdrop.classList.remove('show');
+  navEl.classList.remove('menu-open');
+  document.body.classList.remove('nav-open-lock');
 }
 
 navBurger.addEventListener('click', () => {
   const isOpen = navRight.classList.toggle('open');
   navBurger.classList.toggle('open', isOpen);
   navBackdrop.classList.toggle('show', isOpen);
+  // nav's mix-blend-mode is what gives the wordmark contrast against the
+  // hero image, but it also drags the full-screen mobile drawer into the
+  // same blend group, making page content bleed through it. Suspend the
+  // blend while the drawer is open so it renders as a solid opaque panel.
+  navEl.classList.toggle('menu-open', isOpen);
+  document.body.classList.toggle('nav-open-lock', isOpen);
 });
 navBackdrop.addEventListener('click', closeMobileNav);
 navRight.querySelectorAll('button, a').forEach((el) => el.addEventListener('click', closeMobileNav));
