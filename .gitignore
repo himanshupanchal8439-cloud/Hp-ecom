@@ -1,0 +1,8 @@
+node_modules/
+backend/.env
+
+# Runtime data (contains password hashes and customer info) — keep out of git.
+# products.json is seed/catalog data and is intentionally tracked.
+backend/data/users.json
+backend/data/carts.json
+backend/data/orders.json

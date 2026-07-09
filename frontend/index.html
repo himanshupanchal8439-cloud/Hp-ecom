@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cream">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HIM-STORE — Structural Basics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav>
+  <button class="wordmark" id="homeLink">HIM-STORE</button>
+  <div class="nav-right">
+    <a href="admin.html" id="adminLink" style="display:none; opacity:.85">Admin</a>
+    <span id="userStatus" style="opacity:.85">Sign in</span>
+    <button id="cartToggle">Bag (<span id="cartCount">0</span>)</button>
+    <div class="dots" id="themeDots">
+      <div class="dot" data-t="cream"></div>
+      <div class="dot" data-t="dark"></div>
+      <div class="dot" data-t="red"></div>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="hero-mark">
+      <svg viewBox="0 0 1200 220" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+        <text x="0" y="180" font-family="Fraunces, serif" font-size="200" font-weight="500" letter-spacing="-6">HIM-STORE</text>
+      </svg>
+    </div>
+    <div class="rule"></div>
+    <div class="hero-highlight">
+      <span>Limited autumn release • 6 sculptural essentials</span>
+      <span>Free express shipping over ₹5000</span>
+    </div>
+    <div class="hero-grid">
+      <div class="col-title">Built like<br/>a joint,<br/>not a seam.</div>
+      <div class="col-copy">A small run of structural basics — patterns drawn from load-bearing shapes rather than trend boards. Six pieces, cut once a season, made to outlast the drop that made them.</div>
+      <div class="col-meta">
+        <button class="btn" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">Enter the shop</button>
+        <span>© 2026 — Object no. 01–06</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="shop">
+    <div id="productSections">
+      <div class="empty-state">Loading products…</div>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <div class="section-head">
+      <h2>Visit & Contact</h2>
+      <span class="idx">03 / 03</span>
+    </div>
+    <div class="hero-highlight" style="margin:0; justify-content:space-between; flex-wrap:wrap;">
+      <span>Studio open by appointment • Leeds, UK</span>
+      <a class="btn" href="mailto:hello@him-style.com" style="border-bottom:1px solid currentColor;">hello@him-style.com</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="rule"></div>
+  <div class="foot-big">Made to bear weight.<br/><span class="accent">Not just to be worn.</span></div>
+  <div class="foot-cta">
+    <span>New season preview opens Friday</span>
+    <a href="#shop">Browse essentials</a>
+  </div>
+  <div class="rule"></div>
+  <div class="foot-cols" style="margin-top:40px;">
+    <div>
+      <span class="wordmark">HIM-STORE</span>
+      <span style="opacity:.6">All rights reserved © 2026</span>
+    </div>
+    <div>
+      <a href="#shop">Shop</a>
+      <a href="#">Lookbook</a>
+      <a href="#">About</a>
+      <a href="#">Stockists</a>
+    </div>
+    <div>
+      <a href="#">Instagram</a>
+      <a href="#">Are.na</a>
+      <a href="#">Substack</a>
+    </div>
+    <div>
+      <a href="#contact">Contact</a>
+      <a href="#">Shipping &amp; Returns</a>
+      <a href="#">Privacy Policy</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>Studio address — 14 Kettle Yard, Leeds, UK</span>
+    <span>Design reference: editorial grid, hover-swap product cards</span>
+  </div>
+</footer>
+
+<!-- Product detail overlay -->
+<div class="overlay center" id="productOverlay">
+  <div class="panel">
+    <div class="panel-head">
+      <h3>Product</h3>
+      <button class="close-btn" data-close="productOverlay">✕</button>
+    </div>
+    <div id="productDetailBody"></div>
+  </div>
+</div>
+
+<!-- Cart overlay -->
+<div class="overlay" id="cartOverlay">
+  <div class="panel">
+    <div class="panel-head">
+      <h3>Your Bag</h3>
+      <button class="close-btn" data-close="cartOverlay">✕</button>
+    </div>
+    <div id="cartItems"><div class="empty-state">Your bag is empty.</div></div>
+    <div class="cart-total"><span>Total</span><span id="cartTotal">₹0</span></div>
+    <button class="full-btn" id="checkoutBtn">Checkout</button>
+  </div>
+</div>
+
+<!-- Checkout overlay -->
+<div class="overlay" id="checkoutOverlay">
+  <div class="panel">
+    <div class="panel-head">
+      <h3>Checkout</h3>
+      <button class="close-btn" data-close="checkoutOverlay">✕</button>
+    </div>
+
+    <div class="section-head" style="margin-bottom:12px;">
+      <h2 style="font-size:1rem;">Shipping address</h2>
+    </div>
+    <div id="addressList"></div>
+
+    <form id="addAddressForm" style="margin-top:14px; display:none;">
+      <div class="field"><label>Full name</label><input id="addrName" required /></div>
+      <div class="field"><label>Phone</label><input id="addrPhone" required /></div>
+      <div class="field"><label>Address line 1</label><input id="addrLine1" required /></div>
+      <div class="field"><label>Address line 2 (optional)</label><input id="addrLine2" /></div>
+      <div class="field"><label>City</label><input id="addrCity" required /></div>
+      <div class="field"><label>State</label><input id="addrState" required /></div>
+      <div class="field"><label>Postal code</label><input id="addrPostal" required /></div>
+      <div class="form-msg" id="addrMsg"></div>
+      <button class="ghost-btn" type="submit">Save address</button>
+    </form>
+    <button class="ghost-btn" id="showAddAddress">+ Add new address</button>
+
+    <div class="section-head" style="margin:24px 0 12px;">
+      <h2 style="font-size:1rem;">Payment method</h2>
+    </div>
+    <div class="field">
+      <label style="flex-direction:row; align-items:center; gap:8px; text-transform:none; letter-spacing:0;">
+        <input type="radio" name="paymentMethod" value="cod" checked style="width:auto;" /> Cash on Delivery
+      </label>
+    </div>
+    <div class="field">
+      <label style="flex-direction:row; align-items:center; gap:8px; text-transform:none; letter-spacing:0;">
+        <input type="radio" name="paymentMethod" value="razorpay" style="width:auto;" /> Pay online — UPI / Card / Netbanking (Razorpay)
+      </label>
+    </div>
+
+    <div class="cart-total"><span>Total</span><span id="checkoutTotal">₹0</span></div>
+    <div class="form-msg" id="checkoutMsg"></div>
+    <button class="full-btn" id="placeOrderBtn">Place order</button>
+  </div>
+</div>
+
+<!-- Order confirmation overlay -->
+<div class="overlay center" id="orderConfirmOverlay">
+  <div class="panel">
+    <div class="panel-head">
+      <h3>Order placed</h3>
+      <button class="close-btn" data-close="orderConfirmOverlay">✕</button>
+    </div>
+    <div id="orderConfirmBody"></div>
+  </div>
+</div>
+
+<!-- Auth overlay -->
+<div class="overlay center" id="authOverlay">
+  <div class="panel">
+    <div class="panel-head">
+      <h3 id="authTitle">Sign In</h3>
+      <button class="close-btn" data-close="authOverlay">✕</button>
+    </div>
+    <form id="authForm">
+      <div class="field" id="nameField" style="display:none">
+        <label for="authName">Name</label>
+        <input id="authName" type="text" autocomplete="name" />
+      </div>
+      <div class="field">
+        <label for="authEmail">Email</label>
+        <input id="authEmail" type="email" autocomplete="email" required />
+      </div>
+      <div class="field">
+        <label for="authPassword">Password</label>
+        <input id="authPassword" type="password" autocomplete="current-password" required />
+      </div>
+      <div class="form-msg" id="authMsg"></div>
+      <button class="full-btn" type="submit" id="authSubmit">Sign In</button>
+    </form>
+    <div class="auth-switch">
+      <span id="authSwitchText">Don't have an account?</span>
+      <button id="authSwitchBtn">Create one</button>
+    </div>
+    <button class="ghost-btn" id="signOutBtn" style="display:none">Sign Out</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

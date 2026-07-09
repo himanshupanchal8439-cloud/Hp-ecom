@@ -1,68 +1,59 @@
 require('dotenv').config();
+
+const path = require('path');
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
-const path = require('path');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 
-// Initialize Express app
+const productsRouter = require('./routes/products');
+const authRouter = require('./routes/auth');
+const cartRouter = require('./routes/cart');
+const ordersRouter = require('./routes/orders');
+const adminRouter = require('./routes/admin');
+
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4000;
 
-// Middleware
+app.use(
+  helmet({
+    contentSecurityPolicy: false, // relaxed for the static frontend + Razorpay checkout script
+  })
+);
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
 
-// Serve static files from public folder
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Test database connection
-const db = require('./config/database');
-db.getConnection((err, connection) => {
-  if (err) {
-    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-      console.error('Database connection was closed.');
-    }
-    if (err.code === 'ER_CON_COUNT_ERROR') {
-      console.error('Database has too many connections.');
-    }
-    if (err.code === 'ER_AUTHENTICATION_PLUGIN_ERROR') {
-      console.error('Database connection credentials are incorrect.');
-    }
-  } else {
-    console.log('MySQL database connected successfully!');
-    connection.release();
-  }
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 50,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many attempts. Please wait a few minutes and try again.' },
 });
 
-// Import routes
-const authRoutes = require('./routes/auth');
-const productRoutes = require('./routes/products');
-const cartRoutes = require('./routes/cart');
-const orderRoutes = require('./routes/orders');
-const paymentRoutes = require('./routes/payments');
-const adminRoutes = require('./routes/admin');
+app.use('/api/auth/register', authLimiter);
+app.use('/api/auth/login', authLimiter);
+app.use('/api/auth', authRouter);
+app.use('/api/products', productsRouter);
+app.use('/api/cart', cartRouter);
+app.use('/api/orders', ordersRouter);
+app.use('/api/admin', adminRouter);
 
-// Use routes
-app.use('/api/auth', authRoutes);
-app.use('/api/products', productRoutes);
-app.use('/api/cart', cartRoutes);
-app.use('/api/orders', orderRoutes);
-app.use('/api/payments', paymentRoutes);
-app.use('/api/admin', adminRoutes);
+app.use(express.static(path.join(__dirname, '..', 'frontend')));
 
-// Serve frontend HTML (catch-all)
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api/')) return next();
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'index.html'));
 });
 
-// Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: 'Internal Server Error', message: err.message });
+  console.error(err);
+  res.status(500).json({ error: 'Internal server error' });
 });
 
-// Start server
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`HIM-STORE server running at http://localhost:${PORT}`);
+  if (!process.env.RAZORPAY_KEY_ID) {
+    console.log('Razorpay keys not set — online payments disabled, Cash on Delivery still works. See backend/.env.example');
+  }
 });

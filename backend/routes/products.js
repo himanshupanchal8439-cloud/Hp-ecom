@@ -1,16 +1,19 @@
 const express = require('express');
-const productController = require('../controllers/productController');
-const { verifyAdmin } = require('../middleware/auth');
+const { read } = require('../db');
+const { withStockStatus } = require('../lib/stock');
 
 const router = express.Router();
 
-// Public routes
-router.get('/', productController.getAllProducts);
-router.get('/:id', productController.getProductById);
+router.get('/', (req, res) => {
+  const products = read('products').map(withStockStatus);
+  res.json(products);
+});
 
-// Admin routes (protected)
-router.post('/', verifyAdmin, productController.createProduct);
-router.put('/:id', verifyAdmin, productController.updateProduct);
-router.delete('/:id', verifyAdmin, productController.deleteProduct);
+router.get('/:id', (req, res) => {
+  const products = read('products');
+  const product = products.find((p) => p.id === req.params.id);
+  if (!product) return res.status(404).json({ error: 'Product not found' });
+  res.json(withStockStatus(product));
+});
 
 module.exports = router;

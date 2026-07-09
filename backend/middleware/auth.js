@@ -1,29 +1,24 @@
 const jwt = require('jsonwebtoken');
 
-const verifyToken = (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1];
+const JWT_SECRET = process.env.JWT_SECRET || 'him-store-dev-secret';
 
-  if (!token) {
-    return res.status(401).json({ error: 'No token provided' });
+function requireAuth(req, res, next) {
+  const header = req.headers.authorization || '';
+  const token = header.startsWith('Bearer ') ? header.slice(7) : null;
+  if (!token) return res.status(401).json({ error: 'Not authenticated' });
+  try {
+    req.user = jwt.verify(token, JWT_SECRET);
+    next();
+  } catch {
+    res.status(401).json({ error: 'Invalid or expired token' });
   }
+}
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ error: 'Invalid token', message: err.message });
-    }
-    req.userId = decoded.id;
-    req.userEmail = decoded.email;
-    next();
-  });
-};
+function requireAdmin(req, res, next) {
+  if (req.user?.role !== 'admin') {
+    return res.status(403).json({ error: 'Admin access required' });
+  }
+  next();
+}
 
-const verifyAdmin = (req, res, next) => {
-  // First verify token
-  verifyToken(req, res, () => {
-    // Check if user is admin (this is a placeholder - implement admin role check in DB)
-    // For now, we'll just pass through. In production, verify admin role from database
-    next();
-  });
-};
-
-module.exports = { verifyToken, verifyAdmin };
+module.exports = { requireAuth, requireAdmin, JWT_SECRET };
