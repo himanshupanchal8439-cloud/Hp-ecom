@@ -114,8 +114,7 @@ nav::before{
 /* ---------- 3D parallax hero ---------- */
 .hero3d{
   position:relative; height:88vh; min-height:560px; margin:28px 0 72px;
-  overflow:hidden; border-radius:6px; background:var(--card);
-  perspective:1000px;
+  overflow:hidden; perspective:1000px;
 }
 .hero3d-bg{
   position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
@@ -173,7 +172,7 @@ nav::before{
 .hero3d-pcard .name{ font-size:.72rem; opacity:.7; margin-top:2px; line-height:1.3; }
 
 @media (max-width:900px){
-  .hero3d{ height:auto; min-height:0; padding:32px 20px 28px; border-radius:0; }
+  .hero3d{ height:auto; min-height:0; padding:32px 20px 28px; }
   .hero3d-bg{ position:static; opacity:.08; margin-bottom:-40px; }
   .hero3d-model{ position:static; transform:none; height:280px; width:100%; display:flex; justify-content:center; margin:12px 0; }
   .hero3d-model img{ height:100%; }
