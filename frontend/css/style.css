@@ -9,7 +9,7 @@
   --card: #ddd2c7;
 }
 html[data-theme="dark"]{ --bg:#141210; --fg:#ede4dd; --card:#231f1b; }
-html[data-theme="red"]{ --bg:#ff3b1f; --fg:#141210; --card:#ff5a42; }
+html[data-theme="red"]{ --bg:#ff8066; --fg:#2a0e08; --card:#ffab97; }
 
 *,*::before,*::after{ box-sizing:border-box; }
 html,body{ margin:0; padding:0; }
