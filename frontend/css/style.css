@@ -129,11 +129,8 @@ nav::before{
 }
 .hero3d-model-inner{ height:100%; will-change:transform; }
 .hero3d-model img{
-  height:100%; width:auto; object-fit:cover; display:block;
-  -webkit-mask-image: linear-gradient(to top, transparent 0%, black 14%, black 88%, transparent 100%);
-  mask-image: linear-gradient(to top, transparent 0%, black 14%, black 88%, transparent 100%);
-  filter: drop-shadow(0 24px 32px rgba(0,0,0,.35));
-  border-radius:8px;
+  height:100%; width:auto; display:block;
+  filter: drop-shadow(0 24px 28px rgba(0,0,0,.28));
 }
 
 .hero3d-left{
