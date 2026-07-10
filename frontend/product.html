@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>HIM-STORE — Structural Basics</title>
+<title>HIM-STORE — Product</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
@@ -34,45 +34,11 @@
 <div class="nav-backdrop" id="navBackdrop"></div>
 
 <main class="wrap">
+  <button class="pdp-back" onclick="window.location.href='index.html'">← Back to shop</button>
 
-  <section class="hero">
-    <div class="hero-mark">
-      <svg viewBox="0 0 1200 220" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
-        <text x="0" y="180" font-family="Fraunces, serif" font-size="200" font-weight="500" letter-spacing="-6">HIM-STORE</text>
-      </svg>
-    </div>
-    <div class="rule"></div>
-    <div class="hero-highlight">
-      <span>Limited autumn release • 6 sculptural essentials</span>
-      <span>Free express shipping over ₹5000</span>
-    </div>
-    <div class="hero-grid">
-      <div class="col-title">Built like<br/>a joint,<br/>not a seam.</div>
-      <div class="col-copy">A small run of structural basics — patterns drawn from load-bearing shapes rather than trend boards. Six pieces, cut once a season, made to outlast the drop that made them.</div>
-      <div class="col-meta">
-        <button class="btn" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">Enter the shop</button>
-        <span>© 2026 — Object no. 01–06</span>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="shop">
-    <div id="productSections">
-      <div class="empty-state">Loading products…</div>
-    </div>
-  </section>
-
-  <section class="section" id="contact">
-    <div class="section-head">
-      <h2>Visit & Contact</h2>
-      <span class="idx">03 / 03</span>
-    </div>
-    <div class="hero-highlight" style="margin:0; justify-content:space-between; flex-wrap:wrap;">
-      <span>Studio open by appointment • Leeds, UK</span>
-      <a class="btn" href="mailto:hello@him-style.com" style="border-bottom:1px solid currentColor;">hello@him-style.com</a>
-    </div>
-  </section>
-
+  <div id="pdpRoot">
+    <div class="empty-state">Loading product…</div>
+  </div>
 </main>
 
 <footer>
@@ -80,32 +46,10 @@
   <div class="foot-big">Made to bear weight.<br/><span class="accent">Not just to be worn.</span></div>
   <div class="foot-cta">
     <span>New season preview opens Friday</span>
-    <a href="#shop">Browse essentials</a>
+    <a href="index.html#shop">Browse essentials</a>
   </div>
   <div class="rule"></div>
-  <div class="foot-cols" style="margin-top:40px;">
-    <div>
-      <span class="wordmark">HIM-STORE</span>
-      <span style="opacity:.6">All rights reserved © 2026</span>
-    </div>
-    <div>
-      <a href="#shop">Shop</a>
-      <a href="#">Lookbook</a>
-      <a href="#">About</a>
-      <a href="#">Stockists</a>
-    </div>
-    <div>
-      <a href="#">Instagram</a>
-      <a href="#">Are.na</a>
-      <a href="#">Substack</a>
-    </div>
-    <div>
-      <a href="#contact">Contact</a>
-      <a href="#">Shipping &amp; Returns</a>
-      <a href="#">Privacy Policy</a>
-    </div>
-  </div>
-  <div class="foot-bottom">
+  <div class="foot-bottom" style="margin-top:24px;">
     <span>Studio address — 14 Kettle Yard, Leeds, UK</span>
     <span>Developed by Himanshu Panchal</span>
   </div>
@@ -253,5 +197,6 @@
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="js/config.js"></script>
 <script src="js/app.js"></script>
+<script src="js/product-detail.js"></script>
 </body>
 </html>

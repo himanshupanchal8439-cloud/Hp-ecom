@@ -98,8 +98,8 @@ dots.forEach((d) => d.addEventListener('click', () => setTheme(d.dataset.t)));
 setTheme(localStorage.getItem('theme') || 'cream');
 
 /* ---------- Overlays ---------- */
-function openOverlay(id) { document.getElementById(id).classList.add('open'); }
-function closeOverlay(id) { document.getElementById(id).classList.remove('open'); }
+function openOverlay(id) { document.getElementById(id)?.classList.add('open'); }
+function closeOverlay(id) { document.getElementById(id)?.classList.remove('open'); }
 document.querySelectorAll('[data-close]').forEach((btn) =>
   btn.addEventListener('click', () => closeOverlay(btn.dataset.close))
 );
@@ -140,6 +140,7 @@ function productCard(p) {
 
 function renderProducts() {
   const container = document.getElementById('productSections');
+  if (!container) return;
   if (state.products.length === 0) {
     container.innerHTML = '<div class="empty-state">No products available right now.</div>';
     return;
@@ -160,40 +161,13 @@ function renderProducts() {
     .join('');
   container.innerHTML = sections;
   container.querySelectorAll('.card').forEach((card) =>
-    card.addEventListener('click', () => openProductDetail(card.dataset.id))
+    card.addEventListener('click', () => { window.location.href = `product.html?id=${card.dataset.id}`; })
   );
 }
 
 async function loadProducts() {
   state.products = await api('/products');
   renderProducts();
-}
-
-function openProductDetail(id) {
-  const p = state.products.find((x) => x.id === id);
-  if (!p) return;
-  const outOfStock = p.stock === 'out-of-stock';
-  const hasDiscount = p.discountPercent > 0 && p.mrp > p.price;
-  document.getElementById('productDetailBody').innerHTML = `
-    <div class="product-detail">
-      <div class="pd-media">
-        ${hasDiscount ? `<span class="discount-badge">${p.discountPercent}% OFF</span>` : ''}
-        <img src="${p.front}" alt="${p.name} front" />
-        <img src="${p.back}" alt="${p.name} back" />
-      </div>
-      <div>
-        <h3 class="pd-name">${p.name}</h3>
-        <div class="pd-price">₹${p.price}${hasDiscount ? ` <s class="mrp">₹${p.mrp}</s>` : ''}</div>
-        <p class="pd-desc">${p.description || ''}</p>
-        <button class="full-btn" id="buyNowBtn" ${outOfStock ? 'disabled' : ''}>${outOfStock ? 'Out of stock' : 'Buy now'}</button>
-        <button class="ghost-btn" id="addToCartBtn" ${outOfStock ? 'disabled' : ''}>${outOfStock ? '' : 'Add to bag'}</button>
-      </div>
-    </div>`;
-  if (!outOfStock) {
-    document.getElementById('addToCartBtn').addEventListener('click', () => addToCart(p.id));
-    document.getElementById('buyNowBtn').addEventListener('click', () => buyNow(p.id));
-  }
-  openOverlay('productOverlay');
 }
 
 /* ---------- Cart ---------- */
@@ -681,7 +655,14 @@ document.getElementById('signOutBtn').addEventListener('click', () => {
   showToast('Signed out');
 });
 
-document.getElementById('homeLink').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+document.getElementById('homeLink').addEventListener('click', () => {
+  const onShopPage = /(^|\/)index\.html$/.test(location.pathname) || location.pathname.endsWith('/') || location.pathname === '';
+  if (onShopPage) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else {
+    window.location.href = 'index.html';
+  }
+});
 
 /* ---------- Init ---------- */
 async function verifySession() {
