@@ -1,0 +1,44 @@
+.admin-wrap{ padding: 32px clamp(16px,3vw,48px) 80px; }
+.table-scroll{ overflow-x:auto; -webkit-overflow-scrolling:touch; margin-top:16px; }
+.admin-wrap table{ width:100%; min-width:640px; border-collapse:collapse; font-size:.9rem; }
+.admin-wrap th,.admin-wrap td{ text-align:left; padding:10px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
+.admin-wrap th{ text-transform:uppercase; font-size:.7rem; letter-spacing:.08em; opacity:.6; white-space:nowrap; }
+.admin-wrap td img{ width:40px; height:52px; object-fit:cover; }
+.row-actions{ display:flex; gap:8px; }
+.row-actions button{ background:none; border:1px solid var(--line); color:inherit; padding:4px 10px; cursor:pointer; font-size:.75rem; border-radius:999px; white-space:nowrap; }
+.row-actions button.danger{ color:var(--signal); border-color:var(--signal); }
+.admin-wrap select{ background:var(--bg); color:var(--fg); border:1px solid var(--line); padding:6px; font-family:inherit; }
+.tabbar{ display:flex; gap:10px; margin-top:24px; }
+.tabbar button{ background:none; border:1px solid var(--line); color:inherit; padding:8px 16px; cursor:pointer; border-radius:999px; text-transform:uppercase; font-size:.75rem; letter-spacing:.08em; }
+.tabbar button.active{ background:var(--fg); color:var(--bg); }
+.tabpane{ display:none; }
+.tabpane.active{ display:block; }
+.grid-form{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:20px; padding:16px; border:1px solid var(--line); }
+.grid-form .field{ margin:0; }
+.grid-form .full-btn{ grid-column:span 2; }
+.grid-form .span2{ grid-column:span 2; }
+.locked{ padding:60px 0; text-align:center; }
+
+@media (max-width:900px){
+  .admin-nav .nav-right{
+    position:static !important; width:auto !important; height:auto !important;
+    transform:none !important; background:none !important;
+    -webkit-backdrop-filter:none !important; backdrop-filter:none !important;
+    flex-direction:row !important; padding:0 !important; gap:12px;
+    mix-blend-mode:normal;
+  }
+}
+
+@media (max-width:700px){
+  .admin-wrap{ padding: 24px 16px 64px; }
+  .admin-wrap h1.serif{ font-size:1.5rem !important; }
+  .admin-nav{ flex-wrap:wrap; row-gap:8px; }
+  .admin-nav .wordmark{ white-space:nowrap; font-size:1.1rem; }
+  .admin-nav .nav-right{ gap:12px; font-size:.8rem; }
+  .tabbar{ gap:8px; }
+  .tabbar button{ padding:7px 12px; font-size:.68rem; }
+  .grid-form{ grid-template-columns:1fr; padding:14px; }
+  .grid-form .full-btn, .grid-form .span2{ grid-column:span 1 !important; }
+  .locked form{ max-width:none !important; }
+  .row-actions{ flex-wrap:wrap; }
+}
