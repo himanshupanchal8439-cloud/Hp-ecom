@@ -2,7 +2,7 @@
   "buildCommand": "cd client && npm install && npm run build",
   "outputDirectory": "client/dist",
   "installCommand": "echo skip",
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
+  "rewrites": [{ "source": "/((?!assets/|favicon|.*\\.).*)", "destination": "/index.html" }],
   "build": {
     "env": {
       "VITE_API_BASE": "https://hp-ecom.onrender.com/api"
