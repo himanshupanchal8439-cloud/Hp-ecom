@@ -116,6 +116,7 @@ nav::before{
   position:relative; height:88vh; min-height:560px; margin:28px 0 72px;
   overflow:hidden; perspective:1000px;
 }
+.hero3d-stage{ display:contents; }
 .hero3d-bg{
   position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
   pointer-events:none; opacity:.14; will-change:transform;
@@ -173,8 +174,16 @@ nav::before{
 
 @media (max-width:900px){
   .hero3d{ height:auto; min-height:0; padding:32px 20px 28px; }
-  .hero3d-bg{ position:static; opacity:.08; margin-bottom:-40px; }
-  .hero3d-model{ position:static; transform:none; height:280px; width:100%; display:flex; justify-content:center; margin:12px 0; }
+  .hero3d-stage{
+    display:block; position:relative; height:300px; margin:12px 0; overflow:hidden;
+  }
+  .hero3d-bg{
+    position:absolute; inset:0; opacity:.1; margin-bottom:0;
+  }
+  .hero3d-model{
+    position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+    height:100%; width:auto; margin:0;
+  }
   .hero3d-model img{ height:100%; }
   .hero3d-left{ position:static; max-width:none; margin-bottom:24px; }
   .hero3d-right{ position:static; flex-direction:row; overflow-x:auto; gap:14px; padding-bottom:4px; }
