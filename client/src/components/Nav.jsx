@@ -80,6 +80,7 @@ export default function Nav() {
               {['cream', 'dark', 'red'].map((t) => (
                 <div
                   key={t}
+                  data-t={t}
                   className={`dot${theme === t ? ' active' : ''}`}
                   onClick={() => setTheme(t)}
                 />
