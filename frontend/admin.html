@@ -10,12 +10,13 @@
 <link rel="stylesheet" href="css/style.css">
 <style>
   .admin-wrap{ padding: 32px clamp(16px,3vw,48px) 80px; }
-  table{ width:100%; border-collapse:collapse; font-size:.9rem; margin-top:16px; }
+  .table-scroll{ overflow-x:auto; -webkit-overflow-scrolling:touch; margin-top:16px; }
+  table{ width:100%; min-width:640px; border-collapse:collapse; font-size:.9rem; }
   th,td{ text-align:left; padding:10px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
-  th{ text-transform:uppercase; font-size:.7rem; letter-spacing:.08em; opacity:.6; }
+  th{ text-transform:uppercase; font-size:.7rem; letter-spacing:.08em; opacity:.6; white-space:nowrap; }
   td img{ width:40px; height:52px; object-fit:cover; }
   .row-actions{ display:flex; gap:8px; }
-  .row-actions button{ background:none; border:1px solid var(--line); color:inherit; padding:4px 10px; cursor:pointer; font-size:.75rem; border-radius:999px; }
+  .row-actions button{ background:none; border:1px solid var(--line); color:inherit; padding:4px 10px; cursor:pointer; font-size:.75rem; border-radius:999px; white-space:nowrap; }
   .row-actions button.danger{ color:var(--signal); border-color:var(--signal); }
   select{ background:var(--bg); color:var(--fg); border:1px solid var(--line); padding:6px; font-family:inherit; }
   .tabbar{ display:flex; gap:10px; margin-top:24px; }
@@ -27,6 +28,34 @@
   .grid-form .field{ margin:0; }
   .grid-form .full-btn{ grid-column:span 2; }
   .locked{ padding:60px 0; text-align:center; }
+
+  /* This page has no hamburger/drawer toggle, so undo style.css's shared
+     mobile nav-right treatment (position:fixed off-canvas panel) — without
+     that override it sits permanently translated off-screen, inflating the
+     page's scrollable width and making admin content unreachable on mobile. */
+  @media (max-width:900px){
+    .nav-right{
+      position:static !important; width:auto !important; height:auto !important;
+      transform:none !important; background:none !important;
+      -webkit-backdrop-filter:none !important; backdrop-filter:none !important;
+      flex-direction:row !important; padding:0 !important; gap:12px;
+      mix-blend-mode:normal;
+    }
+  }
+
+  @media (max-width:700px){
+    .admin-wrap{ padding: 24px 16px 64px; }
+    h1.serif{ font-size:1.5rem !important; }
+    nav{ flex-wrap:wrap; row-gap:8px; }
+    .wordmark{ white-space:nowrap; font-size:1.1rem; }
+    .nav-right{ gap:12px; font-size:.8rem; }
+    .tabbar{ gap:8px; }
+    .tabbar button{ padding:7px 12px; font-size:.68rem; }
+    .grid-form{ grid-template-columns:1fr; padding:14px; }
+    .grid-form .full-btn, .grid-form div[style*="span 2"]{ grid-column:span 1 !important; }
+    #lockedMsg form{ max-width:none !important; }
+    .row-actions{ flex-wrap:wrap; }
+  }
 </style>
 </head>
 <body>
@@ -69,10 +98,12 @@
     </div>
 
     <div class="tabpane active" id="tab-products">
-      <table>
-        <thead><tr><th></th><th>Name</th><th>Category</th><th>Price</th><th>Discount</th><th>Stock</th><th></th></tr></thead>
-        <tbody id="productsTable"></tbody>
-      </table>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th></th><th>Name</th><th>Category</th><th>Price</th><th>Discount</th><th>Stock</th><th></th></tr></thead>
+          <tbody id="productsTable"></tbody>
+        </table>
+      </div>
 
       <form class="grid-form" id="productForm">
         <input type="hidden" id="pId" />
@@ -92,10 +123,12 @@
     </div>
 
     <div class="tabpane" id="tab-orders">
-      <table>
-        <thead><tr><th>Order</th><th>Customer</th><th>Items</th><th>Total</th><th>Payment</th><th>Status</th></tr></thead>
-        <tbody id="ordersTable"></tbody>
-      </table>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Order</th><th>Customer</th><th>Items</th><th>Total</th><th>Payment</th><th>Status</th></tr></thead>
+          <tbody id="ordersTable"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 </main>
