@@ -249,7 +249,7 @@ export default function Admin() {
           )}
           <div className="dots">
             {['cream', 'dark', 'red'].map((t) => (
-              <div key={t} className={`dot${theme === t ? ' active' : ''}`} onClick={() => setTheme(t)} />
+              <div key={t} data-t={t} className={`dot${theme === t ? ' active' : ''}`} onClick={() => setTheme(t)} />
             ))}
           </div>
         </div>
