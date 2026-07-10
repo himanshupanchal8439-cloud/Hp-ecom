@@ -103,7 +103,7 @@ nav::before{
   }
 }
 
-.hero-highlight-wrap{ padding-top:32px; }
+.hero-highlight-wrap{ padding-top:12px; }
 .hero-highlight{
   margin: 0 0 0; padding: 18px 20px; border: 1px solid var(--line);
   display:flex; align-items:center; justify-content:space-between; gap:16px;
@@ -113,7 +113,7 @@ nav::before{
 
 /* ---------- 3D parallax hero ---------- */
 .hero3d{
-  position:relative; height:88vh; min-height:560px; margin:28px 0 72px;
+  position:relative; height:88vh; min-height:560px; margin:12px 0 72px;
   overflow:hidden; perspective:1000px;
 }
 .hero3d-bg{
